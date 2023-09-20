@@ -22,7 +22,7 @@ function UsersList() {
 
   return (
     <>
-      <h3>List</h3>
+      <h3>List alci</h3>
       <div className="card">
         {users?.map((user, index) => (
           <p key={index} >{user.name}</p>
