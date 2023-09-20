@@ -18,20 +18,20 @@ services:
             - symfony_app
     php:
         build:
-            context: ./php
+            context: .docker/php
             args:
                 TIMEZONE: ${TIMEZONE}
         volumes:
-            - ../:/var/www/symfony:cached
+            - ./:/var/www/symfony:cached
             - symfony_app_var:/var/www/symfony/var
             - symfony_app_vendor:/var/www/symfony/vendor
         networks:
             - symfony_app
     nginx:
         build:
-            context: ./nginx
+            context: .docker/nginx
         volumes:
-            - ../:/var/www/symfony:cached
+            - ./:/var/www/symfony:cached
             - symfony_app_var:/var/www/symfony/var
             - symfony_app_vendor:/var/www/symfony/vendor
         ports:
@@ -39,7 +39,13 @@ services:
         networks:
             - symfony_app
         env_file:
-            - .env.nginx.local
+            - .docker/.env.nginx.local
+    frontend:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+        - "5173:5173"
 
 volumes:
     symfony_app_var:
